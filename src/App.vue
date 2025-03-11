@@ -142,7 +142,7 @@ const pickRandomCard = () => {
       <button v-if="card.completed" class="delete" @click="removeTask(card.id)">x</button>
       <span class="slam" v-if="card.completed">COMPLETED!</span>
     </div>
-    <button>=====</button>
+    
   </div>  
   <div v-if="pickedCard" class="picked-card">
   <div class="card" >
