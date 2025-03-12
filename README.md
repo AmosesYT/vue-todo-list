@@ -14,8 +14,6 @@ A simple, personal to-do list application built with Vue.js.
 - **Frontend:** Vue.js (Composition API)
 - **Styling:** CSS 
 
-## 📂 Project Structure
-
 ## 🛠️ Setup & Usage
 
 To run the project locally:
