@@ -1,29 +1,28 @@
-# VueTodoList4
+# Vue To-Do List
 
-This template should help get you started developing with Vue 3 in Vite.
+A simple, personal to-do list application built with Vue.js.
 
-## Recommended IDE Setup
+## 🚀 Features
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- Add, edit, and delete tasks
+- Mark tasks as complete
+- Persistent state with local storage
+- Clean and responsive UI
 
-## Customize configuration
+## 🛠️ Tech Stack
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+- **Frontend:** Vue.js (Composition API)
+- **Styling:** CSS 
 
-## Project Setup
+## 📂 Project Structure
+
+## 🛠️ Setup & Usage
+
+To run the project locally:
+
+1. **Clone the repository:** *(if applicable)*
+
+2. **Install dependencies:**
 
 ```sh
 npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
