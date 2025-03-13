@@ -239,8 +239,6 @@ const pickRandomCard = () => {
   z-index: 4;
 }
 
-
-
 .cards-container {
   display:flex;
   flex-direction:row;
