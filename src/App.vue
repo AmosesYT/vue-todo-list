@@ -240,13 +240,14 @@ const pickRandomCard = () => {
 }
 
 .cards-container {
-  display:flex;
-  flex-direction:row;
-  flex-wrap:wrap;
-  gap:20px;
-  height:auto;
-  width:100%;
-  overflow:hidden;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    height: auto;
+    width: auto;
+    overflow: hidden;
+    justify-content: flex-start; /* Align items to the start (like float: left) */
+    margin: 0 auto; /* Center the entire container */
 }
 
  .picked-card {
@@ -297,7 +298,7 @@ main {
   height:100%;
   display:flex;
   flex-direction:column;
-  padding:45px;
+  padding:45px 40px;
 }
 
 body {
@@ -357,7 +358,7 @@ h4 {
 .card {
   background-color:white;
   color:black;
-  width:calc(325px / 1.3);
+  width:calc(317px / 1.3);
   height:325px;
   position:relative;
   border-radius:5px;
