@@ -180,7 +180,7 @@ const pickRandomCard = () => {
 }
 
 .completed {
-  -webkit-appearance:  none;
+  -webkit-appearance:none;
   appearance:none;
   position:absolute;
   bottom:2%;
