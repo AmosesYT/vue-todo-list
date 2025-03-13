@@ -119,44 +119,50 @@ const pickRandomCard = () => {
 </script>
 
 <template>
-<main>   
-  <div class="buttons">
-    <button class="addTask" @click="showModal = true">+</button>
-    <button class="randomCard" @click="pickRandomCard">Pick a random task!</button>
-  </div>
-  <div v-if="showModal" class="overlay">
-    <div v-if="showModal" class="modal">
-      <input v-model="newSubject" type="text" placeholder="Enter Subject Here">
-      <textarea v-model="newTask"  cols="25" rows="5" placeholder="What's on your mind?"></textarea>
-      <button @click="addTask">Add To List</button>
-      <button class="close" @click="closeButton" >Close</button>
+<body>
+  <header class="header">
+    <div class="header-name">
+      <h4>TODO-LIST :)</h4>
     </div>
-  </div>
-  <h4>TODO-LIST :)</h4>
-  <div class="cards-container">
-    <div class="card" v-for="card in cards" :key="card.id" :class="{ 'completed-card' : card.completed}">
-      <p class="main-subject" :style="{backgroundColor : card.color}">{{ card.subject }}</p>
-      <p class="main-text">{{ card.text }}</p>
-      <p class="date">{{ card.date }}</p>
-      <input  type="checkbox" class="completed" v-model="card.completed" >
-      <button v-if="card.completed" class="delete" @click="removeTask(card.id)">x</button>
-      <span class="slam" v-if="card.completed">COMPLETED!</span>
+    <div class="header-buttons">
+      <button class="addTask" @click="showModal = true">+</button>
+      <button class="randomCard" @click="pickRandomCard">Pick a task!</button>
     </div>
-    
-  </div>  
-  <div v-if="pickedCard" class="picked-card">
-  <div class="card" >
-    <p class="main-subject" :style="{ backgroundColor: pickedCard.color }">{{ pickedCard.subject }}</p>
-    <p class="main-text">{{ pickedCard.text }}</p>
-    <p class="date">{{ pickedCard.date }}</p>
+  </header>
+  <main>   
+    <div v-if="showModal" class="overlay">
+      <div v-if="showModal" class="modal">
+        <input v-model="newSubject" type="text" placeholder="Enter Subject Here">
+        <textarea v-model="newTask"  cols="25" rows="5" placeholder="What's on your mind?"></textarea>
+        <button @click="addTask">Add To List</button>
+        <button class="close" @click="closeButton" >Close</button>
+      </div>
+    </div>
+    <div class="cards-container">
+      <div class="card" v-for="card in cards" :key="card.id" :class="{ 'completed-card' : card.completed}">
+        <p class="main-subject" :style="{backgroundColor : card.color}">{{ card.subject }}</p>
+        <p class="main-text">{{ card.text }}</p>
+        <p class="date">{{ card.date }}</p>
+        <input  type="checkbox" class="completed" v-model="card.completed" >
+        <button v-if="card.completed" class="delete" @click="removeTask(card.id)">x</button>
+        <span class="slam" v-if="card.completed">COMPLETED!</span>
+      </div>
+      
+    </div>  
+    <div v-if="pickedCard" class="picked-card">
+    <div class="card" >
+      <p class="main-subject" :style="{ backgroundColor: pickedCard.color }">{{ pickedCard.subject }}</p>
+      <p class="main-text">{{ pickedCard.text }}</p>
+      <p class="date">{{ pickedCard.date }}</p>
+    </div>
+    <button class="close" @click="closeButton">Put it back</button>
   </div>
-  <button class="close" @click="closeButton">Put it back</button>
-  
-</div>
-</main>
+  </main>
+</body>
 </template>
 
 <style>
+
 
 @keyframes rattle
 {
@@ -275,36 +281,56 @@ const pickRandomCard = () => {
 }
 
 
-
-main {
-  width:100vw;
-  height:100vh;
-  background-color: rgb(77, 77, 77);
-}
-
 .overlay {
   position:absolute;
   background-color:rgba(0, 0, 0, 0.623);
-  width:100vw;
-  height:100vh;
+  width:100%;
+  height:100%;
   display:flex;
   justify-content: center;
   align-items: center;
   z-index:999;
+  top:0;
+  left:0;
+}
+
+main {
+  width:100%;
+  height:100%;
+  
+  display:flex;
+  flex-direction:column;
 }
 
 body {
-  box-sizing: border-box;
-  font-family: 'Roboto', sans-serif;
-  height:100vh;
-  width:100vw;
+  background-color: rgb(77, 77, 77);
+}
+
+h4 {
+  font-size:4vw;
+  color:rgb(255, 255, 255);
+}
+
+.header {
+  display:flex;
+  flex-direction:row;
+  justify-content:space-between;
+  padding:3vw;
+  padding-top:1vw;
+  position:relative;
+}
+
+.header-name {
+  display:flex;
+}
+
+.header-buttons {
   display:flex;
   justify-content:center;
   align-items:center;
-  text-align:center;
-  overflow:hidden;
-  
 }
+
+
 
 .addTask {
   border:none;
@@ -316,7 +342,6 @@ body {
   border-radius:100%;
   color:white;
   font-size: 30px;
-  position:absolute;
   top:10%;
   right:10%;
 }
@@ -329,7 +354,6 @@ body {
   cursor:pointer;
   background-color:rgb(0, 0, 0);
   color:white;
-  position:absolute;
   top:10%;
   right:15%;
 }
@@ -421,7 +445,7 @@ body {
   font-weight:bold;
   font-size:24px !important;
   position:absolute;
-  top:-25px;
+  top:0;
   width:100%;
   height:65px;
   padding:10px 0px;
@@ -466,12 +490,6 @@ body {
   flex-direction:column;
 }
 
-h4 {
-font-size:60px;
-margin-top:0;
-padding-top:3vw;
-color:white;
-}
 
 button {
 background-color:black;
@@ -486,13 +504,12 @@ margin:5px;
 
 input {
 width:325px;
-height:60px;
 outline:none;
 border:none;
 background-color:rgb(156, 156, 156);
 text-align:center;
 font-weight:bold;
-font-size:34px;
+font-size:32px;
 caret-color: rgba(255, 255, 255, 0.664);
 border-bottom:solid rgb(85, 85, 85) 1px;
 border-bottom-width: 35px;
@@ -537,7 +554,7 @@ pointer-events:none;
 }
 
 .modal {
-  width:320px;
+  width:360px;
   background-color:white;
   border-radius:10px;
   padding:15px 35px;
@@ -550,7 +567,7 @@ pointer-events:none;
 
 .modal button {
   font-size:20px;
-  width:365px;
+  width:112%;
   height:50px;
   background-color:rgb(0, 0, 0);
   border:none;
