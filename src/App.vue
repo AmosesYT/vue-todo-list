@@ -242,13 +242,13 @@ const pickRandomCard = () => {
 
 
 .cards-container {
-  margin:25px;
   display:flex;
   flex-direction:row;
   flex-wrap:wrap;
   gap:20px;
   height:auto;
-  width:1920px;
+  width:100%;
+  overflow:hidden;
 }
 
  .picked-card {
@@ -297,9 +297,9 @@ const pickRandomCard = () => {
 main {
   width:100%;
   height:100%;
-  
   display:flex;
   flex-direction:column;
+  padding:45px;
 }
 
 body {
@@ -329,8 +329,6 @@ h4 {
   justify-content:center;
   align-items:center;
 }
-
-
 
 .addTask {
   border:none;
@@ -477,6 +475,7 @@ h4 {
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
+  text-align:center;
 }
 .date {
   position:absolute;
