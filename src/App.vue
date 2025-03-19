@@ -83,6 +83,7 @@ const pickRandomCard = () => {
       return alert ('Not Enough Characters!')
     } else if (cards.value.length >= 14) {
       return alert ('too many cards')
+      showModal.value = false;
     }
 
     cards.value.push({
@@ -246,8 +247,27 @@ const pickRandomCard = () => {
     height: auto;
     width: auto;
     overflow: hidden;
-    justify-content: flex-start; /* Align items to the start (like float: left) */
-    margin: 0 auto; /* Center the entire container */
+    justify-content: center; 
+    margin: 0 auto;
+    padding:0;
+}
+
+.card {
+  background-color:white;
+  color:black;
+  width:240px;
+  height:325px;
+  position:relative;
+  border-radius:5px;
+  border-bottom-left-radius:5px ;
+  border-bottom-right-radius:5px ;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items: center;
+  flex-direction:column;
+  overflow:hidden;
+  transition: all 0.2s ease-in-out;
 }
 
  .picked-card {
@@ -294,14 +314,12 @@ const pickRandomCard = () => {
 }
 
 main {
-  width:100%;
-  height:100%;
-  display:flex;
-  flex-direction:column;
-  padding:45px 40px;
+  padding:40px 0px;
 }
 
 body {
+  margin:0;
+  padding:0;
   background-color: rgb(77, 77, 77);
 }
 
@@ -330,6 +348,9 @@ h4 {
 }
 
 .addTask {
+  display:flex;
+  justify-content:center;
+  align-items:center;
   border:none;
   padding: 10px;
   width:50px;
@@ -355,21 +376,6 @@ h4 {
   right:15%;
 }
 
-.card {
-  background-color:white;
-  color:black;
-  width:calc(317px / 1.3);
-  height:325px;
-  position:relative;
-  border-radius:5px;
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  align-items: center;
-  flex-direction:column;
-  overflow:hidden;
-  
-}
 
 .card::before {
   content: '';
@@ -445,16 +451,15 @@ h4 {
   top:0;
   width:100%;
   height:65px;
-  padding:10px 0px;
-  margin-bottom:0;
+  padding:0;
+  margin:0;
   border-radius:5px;
-  border-bottom-left-radius: 0%;
-  border-bottom-right-radius: 0%;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
   display:flex;
   justify-content:center;
   align-items:center;
   overflow: hidden;
-  box-sizing: border-box;
   line-height:1;
   text-overflow:ellipsis;
   white-space:nowrap;
@@ -579,5 +584,10 @@ pointer-events:none;
   margin-top:7px;
 }
 
-
+@media (max-width:600px) {
+  .card {
+    width:calc(225px / 1.3) ;
+    height:250px ;
+  }
+}
 </style>
