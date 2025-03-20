@@ -25,9 +25,6 @@
       alert('Too many characters')
     }
   })
-  
- 
-
 
 function getRandomColor() {
   const minDifference = 30; // Minimum hue difference between colors
@@ -134,9 +131,11 @@ const pickRandomCard = () => {
     <div v-if="showModal" class="overlay">
       <div v-if="showModal" class="modal">
         <input v-model="newSubject" type="text" placeholder="Enter Subject Here">
-        <textarea v-model="newTask"  cols="25" rows="5" placeholder="What's on your mind?"></textarea>
-        <button @click="addTask">Add To List</button>
-        <button class="close" @click="closeButton" >Close</button>
+        <textarea v-model="newTask"  cols="25" rows="5" placeholder="What's on your mind?..."></textarea>
+        <div class="button-container">
+          <button @click="addTask">Add To List</button>
+          <button class="close" @click="closeButton" >Close</button>
+        </div>
       </div>
     </div>
     <div class="cards-container">
@@ -240,6 +239,16 @@ const pickRandomCard = () => {
   z-index: 4;
 }
 
+.button-container {
+  width:100%;
+  height:100px;
+  margin:10px;
+  gap:10px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
 .cards-container {
     display: flex;
     flex-wrap: wrap;
@@ -267,7 +276,6 @@ const pickRandomCard = () => {
   align-items: center;
   flex-direction:column;
   overflow:hidden;
-  transition: all 0.2s ease-in-out;
 }
 
  .picked-card {
@@ -407,8 +415,9 @@ h4 {
 
 .completed-card .slam {
   animation: 
-    slam 0.5s ease-in, /* Match duration with background transition */
-    rattle 0.2s ease-in-out 0.5s; /* Adjust delay to start after slam */
+  slam 0.5s ease-in, /* Match duration with background transition */
+  rattle 0.2s ease-in-out 0.5s; /* Adjust delay to start after slam */
+  transition: ease-in-out 0.3s;
   color: #be0000;
   display: block;
   font-family: "Source Sans Pro", sans-serif;
@@ -506,16 +515,15 @@ margin:5px;
 }
 
 input {
-width:325px;
+width:100%;
+height:13%;
+font-size:1.6em;
 outline:none;
 border:none;
 background-color:rgb(156, 156, 156);
 text-align:center;
 font-weight:bold;
-font-size:32px;
 caret-color: rgba(255, 255, 255, 0.664);
-border-bottom:solid rgb(85, 85, 85) 1px;
-border-bottom-width: 35px;
 padding:10px 20px;
 border-radius:5px;
 border-bottom-left-radius: 0%;
@@ -529,15 +537,17 @@ color:rgba(0, 0, 0, 0.555);
 }
 
 textarea {
-width:325px;
-aspect-ratio: 1 /1 ;
+width:100%;
+height:90%;
 outline:none;
 border:none;
 resize:none;
 font-size:22px;
 font-weight:bold;
 font-family:curisve;
-display:flex;
+
+text-align:center;
+
 caret-color:white;
 background-color:rgb(85, 85, 85);
 padding:10px 20px;
@@ -548,46 +558,62 @@ line-height:1.7;
 }
 
 textarea::placeholder {
-position:absolute;
-top:25%;
-left:25%;
-transform: translate(-10%,-25%);
-color:white;
-pointer-events:none;
+  color:rgba(255, 255, 255, 0.445);
+  pointer-events:none;
+  
 }
 
 .modal {
   width:360px;
+  height:65%;
   background-color:white;
   border-radius:10px;
-  padding:15px 35px;
+  padding:15px 20px 0px 20px;
   display:flex;
   flex-direction:column;
   justify-content: center;
   align-items: center;
-
 }
 
 .modal button {
   font-size:20px;
-  width:112%;
+  width:100%;
   height:50px;
   background-color:rgb(0, 0, 0);
   border:none;
   color:white;
-  cursor:pointer;
-  margin-top:15px;
+  cursor:pointer; 
+  margin:0;
 }
 
-.modal .close  {
-  background-color:rgb(0, 0, 0);
-  margin-top:7px;
-}
-
-@media (max-width:600px) {
+@media (max-width:499px) {
   .card {
     width:calc(225px / 1.3) ;
     height:250px ;
   }
+  .completed-card .slam {
+    font-size: 1.5em;
+  }
+  .modal {
+    width:300px;
+    height:65%;
+  }
+  textarea {
+    width:100%;
+    height:100%;
+  }
+  input {
+    width:100%;
+    
+  }
+  .modal button {
+   width:100%;
+  }
+  .button-container {
+    flex-direction:row;
+    justify-content:space-evenly;
+  }
 }
+
+
 </style>
