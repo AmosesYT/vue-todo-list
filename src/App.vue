@@ -18,11 +18,11 @@
       alert('Too many characters!')
     }
   })
-  
+
   watch(newSubject, (newValue) => {
-    if (newValue.length > 16) {
-      newSubject.value = newValue.slice(0,16)
-      alert('Too many characters')
+    if (newValue.length > 25) {
+      newSubject.value = newValue.slice(0,25)
+      alert('Too many characters!')
     }
   })
 
@@ -119,9 +119,7 @@ const pickRandomCard = () => {
 <template>
 <body>
   <header class="header">
-    <div class="header-name">
-      <h4>TODO-LIST :)</h4>
-    </div>
+      <h4 data-text="TODO-LIST">TODO-LIST</h4>
     <div class="header-buttons">
       <button class="addTask" @click="showModal = true">+</button>
       <button class="randomCard" @click="pickRandomCard">Pick a task!</button>
@@ -130,8 +128,9 @@ const pickRandomCard = () => {
   <main>   
     <div v-if="showModal" class="overlay">
       <div v-if="showModal" class="modal">
-        <input v-model="newSubject" type="text" placeholder="Enter Subject Here">
-        <textarea v-model="newTask"  cols="25" rows="5" placeholder="What's on your mind?..."></textarea>
+        <!-- <input v-model="newSubject" type="text" placeholder="Enter Subject Here"> -->
+        <textarea class="input" v-model="newSubject" type="text" placeholder="Enter Subject Here"></textarea>
+        <textarea class="text" v-model="newTask"  cols="25" rows="5" placeholder="What's on your mind?..."></textarea>
         <div class="button-container">
           <button @click="addTask">Add To List</button>
           <button class="close" @click="closeButton" >Close</button>
@@ -142,9 +141,14 @@ const pickRandomCard = () => {
       <div class="card" v-for="card in cards" :key="card.id" :class="{ 'completed-card' : card.completed}">
         <p class="main-subject" :style="{backgroundColor : card.color}">{{ card.subject }}</p>
         <p class="main-text">{{ card.text }}</p>
-        <p class="date">{{ card.date }}</p>
-        <input  type="checkbox" class="completed" v-model="card.completed" >
-        <button v-if="card.completed" class="delete" @click="removeTask(card.id)">x</button>
+        <div class="card-footer">
+          <div class="footer-buttons">
+            <input  type="checkbox" class="completed" v-model="card.completed" >
+            <button v-if="card.completed" class="delete" @click="removeTask(card.id)">✖</button>
+          </div>  
+          <p class="date">{{ card.date }}</p>
+        </div>
+        
         <span class="slam" v-if="card.completed">COMPLETED!</span>
       </div>
       
@@ -182,17 +186,16 @@ const pickRandomCard = () => {
 .completed {
   -webkit-appearance:none;
   appearance:none;
-  position:absolute;
-  bottom:2%;
-  left:2%;
   width:25px;
   height:25px;
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
   border: 2px solid #333;
   border-radius: 5px;
   background-color: white;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  
+  
 }
 
 .completed:checked {
@@ -203,10 +206,6 @@ const pickRandomCard = () => {
 /* Add a checkmark using pseudo-element */
 .completed:checked::before {
   content: '✓';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   font-size: 16px;
   color: white;
   font-weight: bold;
@@ -222,17 +221,13 @@ const pickRandomCard = () => {
 }
 
 .delete {
-  position: absolute;
-  width: 15px;
-  height: 15px;
+  width: 25px;
+  height: 25px;
   cursor: pointer;
   top: 1%;
   right: 1%;
   margin: 0;
   background-color: rgba(255, 73, 73, 0.76);
-  display: flex;
-  justify-content: center;
-  align-items: center;
   padding-bottom: 2px;
   opacity: 0;  /* Start hidden */
   transition: opacity 0.7s ease;  /* Add transition */
@@ -244,6 +239,7 @@ const pickRandomCard = () => {
   height:100px;
   margin:10px;
   gap:10px;
+  padding:0;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -271,11 +267,9 @@ const pickRandomCard = () => {
   border-bottom-left-radius:5px ;
   border-bottom-right-radius:5px ;
   display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
+  justify-content:space-between;
   align-items: center;
   flex-direction:column;
-  overflow:hidden;
 }
 
  .picked-card {
@@ -328,26 +322,153 @@ main {
 body {
   margin:0;
   padding:0;
-  background-color: rgb(77, 77, 77);
+  background-color:#333;
 }
 
 h4 {
-  font-size:4vw;
-  color:rgb(255, 255, 255);
+  position: relative;
+  display: inline-block;
+  font-size: 4.5vw; /* Adjust as needed */
+  font-weight: bold;
+  text-transform: uppercase;
+  animation: glitch 1s linear infinite;
+  color:white;
 }
+
+@keyframes glitch {
+  2%, 64% {
+    transform: translate(2px, 0) skew(0deg);
+  }
+  4%, 60% {
+    transform: translate(-2px, 0) skew(0deg);
+  }
+  62% {
+    transform: translate(0, 0) skew(5deg);
+  }
+}
+
+h4::before,
+h4::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 2px;
+  width: 100%;
+  font-weight:bold;
+}
+
+h4::before {
+  animation: glitchTop 1s linear infinite;
+  clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+}
+
+@keyframes glitchTop {
+  2%, 64% {
+    transform: translate(2px, -2px);
+  }
+  4%, 60% {
+    transform: translate(-2px, 2px);
+  }
+  62% {
+    transform: translate(13px, -1px) skew(-13deg);
+  }
+}
+
+h4::after {
+  bottom: 0;
+  animation: glitchBottom 1.5s linear infinite;
+  clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+}
+
+@keyframes glitchBottom {
+  2%, 64% {
+    transform: translate(-2px, 0);
+  }
+  4%, 60% {
+    transform: translate(-2px, 0);
+  }
+  62% {
+    transform: translate(-22px, 5px) skew(21deg);
+  }
+}
+
 
 .header {
   display:flex;
-  flex-direction:row;
-  justify-content:space-between;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
   padding:3vw;
   padding-top:1vw;
   position:relative;
 }
 
 .header-name {
-  display:flex;
+  position: relative;
+  display: inline-block;
+  font-size: 2rem; /* Adjust as needed */
+  font-weight: bold;
+  text-transform: uppercase;
+  animation: glitch 1s linear infinite;
 }
+
+@keyframes glitch {
+  2%, 64% {
+    transform: translate(2px, 0) skew(0deg);
+  }
+  4%, 60% {
+    transform: translate(-2px, 0) skew(0deg);
+  }
+  62% {
+    transform: translate(0, 0) skew(5deg);
+  }
+}
+
+.header-name::before,
+.header-name::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
+
+.header-name::before {
+  top: 0;
+  color: #ff0000; /* Red glitch layer */
+  animation: glitchTop 1s linear infinite;
+  clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+}
+
+@keyframes glitchTop {
+  2%, 64% {
+    transform: translate(2px, -2px);
+  }
+  4%, 60% {
+    transform: translate(-2px, 2px);
+  }
+  62% {
+    transform: translate(13px, -1px) skew(-13deg);
+  }
+}
+
+.header-name::after {
+  bottom: 0;
+  color: #0000ff; /* Blue glitch layer */
+  animation: glitchBottom 1.5s linear infinite;
+  clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+}
+
+@keyframes glitchBottom {
+  2%, 64% {
+    transform: translate(-2px, 0);
+  }
+  4%, 60% {
+    transform: translate(-2px, 0);
+  }
+  62% {
+    transform: translate(-22px, 5px) skew(21deg);
+  }
+}
+
 
 .header-buttons {
   display:flex;
@@ -359,22 +480,24 @@ h4 {
   display:flex;
   justify-content:center;
   align-items:center;
-  border:none;
-  padding: 10px;
-  width:50px;
-  height:50px;
+  width:60px;
+  height:60px;
   cursor:pointer;
-  background-color:rgb(0, 0, 0);
-  border-radius:100%;
+  background-color:rgb(94, 94, 94);
+  border-radius:50%;
   color:white;
   font-size: 30px;
   top:10%;
   right:10%;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.addTask:hover {
+  background-color:rgb(143, 143, 143);
+  transition:background-color .3s ease-in-out;
 }
 
 .randomCard {
-  border:none;
-  padding: 10px;
   width:125px;
   height:50px;
   cursor:pointer;
@@ -382,6 +505,7 @@ h4 {
   color:white;
   top:10%;
   right:15%;
+  display:none;
 }
 
 
@@ -400,17 +524,17 @@ h4 {
 }
 
 .completed-card::before {
-  content: '';
-  position: absolute;
+  
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   z-index: 2;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.747);
   opacity: 1;
   transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
+  border-radius:4px;
 }
 
 .completed-card .slam {
@@ -428,6 +552,7 @@ h4 {
   text-transform: uppercase;
   transform: rotate(-15deg);
   z-index:3;
+  top: 40%;
 }
 
 @keyframes slam {
@@ -452,49 +577,56 @@ h4 {
 }
 
 
+.card-footer {
+  width:100%;
+  height:10%;
+  display:flex;
+  justify-content:space-between;
+  padding: 0 5px;
+}
+
+.footer-buttons {
+  display:flex;
+  width:100%;
+  height:100%;
+  gap:5px;
+}
+
+.date {
+  font-family:monospace,sans-serif;
+  font-size:18px;
+}
 
 .main-subject {
   font-weight:bold;
-  font-size:24px !important;
-  position:absolute;
-  top:0;
+  font-size:1.5em;
+  letter-spacing:.5px;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  padding:5px;
   width:100%;
-  height:65px;
-  padding:0;
-  margin:0;
+  height:auto;
   border-radius:5px;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  overflow: hidden;
-  line-height:1;
-  text-overflow:ellipsis;
-  white-space:nowrap;
+  word-wrap:break-word;
+  white-space:normal;
+  overflow-wrap:break-word;
+  text-align:center;
 }
 
 .main-text {
-  width: 85%;
-  word-wrap: break-word;
-  margin: 0;
-  max-height: 150px;  /* Fixed height instead of percentage */
-  line-height: 1.5;
-  padding:5px;
-  position: relative;    /* Adjust based on your subject header height */
+  width: 100%;
+  height:100%;
+  overflow-wrap:break-word;
+  line-height: 1.8;
   box-sizing: border-box;
-  font-size: 16px;  /* Fixed font size */
+  font-size:1em;
   overflow: hidden;  /* Hide overflow instead of scrolling */
   text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
   text-align:center;
-}
-.date {
-  position:absolute;
-  bottom:5px;
-  right:5px;
-  margin:0;
+  align-content: center;
+  padding:0px 10px 0px 10px;
+  
 }
 
 .container2 {
@@ -514,53 +646,57 @@ border-radius:5px;
 margin:5px;
 }
 
-input {
-width:100%;
-height:13%;
-font-size:1.6em;
-outline:none;
-border:none;
-background-color:rgb(156, 156, 156);
-text-align:center;
-font-weight:bold;
-caret-color: rgba(255, 255, 255, 0.664);
-padding:10px 20px;
-border-radius:5px;
-border-bottom-left-radius: 0%;
-border-bottom-right-radius: 0%;
-overflow:hidden;
+.input {
+  width:100%;
+  height:20%;
+  font-size:1.7em;
+  outline:none;
+  border:none;
+  resize:none;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  background-color:rgb(156, 156, 156);
+  font-weight:bold;
+  caret-color: rgba(255, 255, 255, 0.664);
+  border-radius:5px;
+  border-bottom-left-radius: 0%;
+  border-bottom-right-radius: 0%;
+  overflow-wrap: break-word;
+  white-space:normal;
+  text-overflow:ellipsis;
+  text-align:center;
+  box-sizing:border-box;
+  padding:0px 15px 0px 15px;
+  overflow:hidden;
+  line-height:1.3;
+  align-content:center;
 }
 
 
-input::placeholder {
-color:rgba(0, 0, 0, 0.555);
+.input::placeholder {
+  color:rgba(0, 0, 0, 0.555);
 }
 
-textarea {
+.text {
 width:100%;
-height:90%;
+height:100%;
+padding:0px 20px;
 outline:none;
 border:none;
 resize:none;
-font-size:22px;
+font-size:1.3em;
 font-weight:bold;
-font-family:curisve;
-
 text-align:center;
-
 caret-color:white;
 background-color:rgb(85, 85, 85);
-padding:10px 20px;
 border-radius:5px;
 border-top-left-radius: 0%;
 border-top-right-radius: 0%;
 line-height:1.7;
+align-content:center;
 }
 
-textarea::placeholder {
+.text::placeholder {
   color:rgba(255, 255, 255, 0.445);
-  pointer-events:none;
-  
 }
 
 .modal {
@@ -589,7 +725,7 @@ textarea::placeholder {
 @media (max-width:499px) {
   .card {
     width:calc(225px / 1.3) ;
-    height:250px ;
+    height:285px ;
   }
   .completed-card .slam {
     font-size: 1.5em;
@@ -612,6 +748,15 @@ textarea::placeholder {
   .button-container {
     flex-direction:row;
     justify-content:space-evenly;
+  }
+  .main-subject {
+    font-size:1.2em;
+  }
+  .main-text {
+    font-size:0.9em;
+  }
+  .button-container {
+    height:60px;
   }
 }
 
